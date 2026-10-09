@@ -40,6 +40,8 @@ footer{display:flex;gap:8px;margin-top:16px}footer a{flex:1;text-align:center;pa
 #hist{width:100%;height:56px;border:1px solid var(--ls);background:linear-gradient(180deg,rgba(0,0,0,.25),transparent);margin-top:10px}
 input.wt{height:7px;background:linear-gradient(90deg,transparent var(--p),rgba(0,0,0,.6) var(--p)),var(--steps)}
 input.hue{background:linear-gradient(90deg,hsl(0 50% 50%),hsl(60 50% 50%),hsl(120 50% 50%),hsl(180 50% 50%),hsl(240 50% 50%),hsl(300 50% 50%),hsl(360 50% 50%))}
+.zbar{display:grid;grid-template-columns:repeat(10,1fr);border:1px solid var(--ls);border-top:0}.zbar span{font:8px 'Courier New',monospace;text-align:center;padding:3px 0}
+.fz .st{cursor:pointer}.fz .st::after{content:'▾';margin-left:auto;font-size:10px}.fz.fold .st::after{content:'▸'}.fz.fold .row{display:none}
 #ov{display:none;position:fixed;inset:0;z-index:9;background:#000e;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:14px;text-align:center}#ov img{max-width:100%;max-height:72vh}
 @media(max-width:760px){.stage{grid-template-columns:1fr}.view{position:sticky;top:0;z-index:5;min-height:220px;max-height:46vh;border-right:0;border-bottom:1px solid var(--ls)}#out{max-height:40vh}.ctl{max-height:none}footer{flex-direction:column}}
 </style></head>

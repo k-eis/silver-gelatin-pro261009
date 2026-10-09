@@ -14,6 +14,8 @@ const SL=[['TONAL CURVE','階調',[['tcBlack','BLACK','黒',50],['tcShadow','SHA
 ['LIGHT LEAK','光線引き',[['lightLeak','LIGHT LEAK','強さ',0],['leakX','POSITION X','位置X',80],['leakY','POSITION Y','位置Y',20],['leakR','RANGE','範囲',50,5,100]]],
 ['FINISH','仕上げ',[['margin','MARGIN','余白',0,0,30],['rebate','NEGATIVE EDGE','ネガ縁',0],['dust','DUST','ホコリ',0],['scratch','SCRATCH','キズ',0]]],
 ['DEVELOP','現像アニメーション',[['develop','DEVELOP','現像の進み',100]]]];
+const ZR=['I','II','III','IV','V','VI','VII','VIII','IX','X'],ZJ=['ほぼ黒','深い影','影の質感','暗い中間','18%グレー','明るい中間','明るい肌','ハイライトの質感','明るい白','ほぼ純白'];
+SL.splice(1,0,['ZONE SYSTEM','ゾーンシステム（階調の微調整）',ZR.map((z,i)=>['z'+(i+1),'ZONE '+z,ZJ[i],0,-100,100])]);
 const CAM={none:{filter:'none',filterStrength:70,tcHighlight:50,tcWhite:50,detail:25,paperGrade:50,dodgeBurn:25,lightLeak:0},
 mmono:{filter:'yellow',filterStrength:20,tcHighlight:44,tcWhite:45,detail:65,paperGrade:48,dodgeBurn:10,lightLeak:0},
 rsharp:{filter:'red',filterStrength:20,tcHighlight:52,tcWhite:50,detail:55,paperGrade:55,dodgeBurn:42,lightLeak:0},
@@ -29,13 +31,14 @@ const DV={d76:[1,1,1],rod:[1.8,1.4,1],hc:[1,1.1,1.15]};
 // ── UI生成
 const gen=$('gen');
 const H=document.createElement('canvas');H.id='hist';H.width=300;H.height=56;gen.appendChild(H);
+const zb=document.createElement('div');zb.className='zbar';zb.innerHTML=[...Array(10)].map((_,i)=>`<span style="background:rgb(${Math.round((i+.5)*25.5)},${Math.round((i+.5)*25.5)},${Math.round((i+.5)*25.5)});color:${i<5?'#aaa':'#333'}">${['I','II','III','IV','V','VI','VII','VIII','IX','X'][i]}</span>`).join('');gen.appendChild(zb);
 const fl=document.createElement('label');fl.className='c';fl.innerHTML='<input type="checkbox" id="free"> FREE MODE 選択中のパッチをもう一度押すと他の軸を戻す';gen.appendChild(fl);
 function grid(key,title,jp,on){const g=document.createElement('div');g.className='grp';g.innerHTML=`<div class="st">${title}<i>${jp}</i></div><div class="grid"></div>`;
  NAMES[key].forEach(n=>{const[k,t]=n.split(':'),b=document.createElement('div');b.className='sb';b.textContent=t;b.dataset.k=k;b.onclick=()=>{if($('free')&&$('free').checked&&S[key]===k&&['cam','film','paper'].includes(key))freeSnap(key);on(k);['cam','film','paper'].forEach(mark);mark(key);go()};g.lastChild.appendChild(b)});gen.appendChild(g);el[key]=g}
 function mark(key){if(!el[key])return;el[key].querySelectorAll('.sb').forEach(b=>b.classList.toggle('on',b.dataset.k===S[key]))}
 const PG=v=>v==50?'中間（2号相当）':v<50?`軟調-${50-v}`:`硬調+${v-50}`;
 const FM={paperGrade:PG,pushPull:v=>((v-50)/25>=0?'+':'')+((v-50)/25).toFixed(1)+' EV',shHue:v=>v+'°',hiHue:v=>v+'°'};
-function setV(id,v){V[id]=+v;const r=$(id);r.value=v;r.style.setProperty('--p',(v-r.min)/(r.max-r.min)*100+'%');$(id+'V').textContent=(FM[id]||(x=>x+'%'))(+v)}
+function setV(id,v){V[id]=+v;const r=$(id);r.value=v;r.style.setProperty('--p',(v-r.min)/(r.max-r.min)*100+'%');$(id+'V').textContent=(FM[id]||(/^z\d+$/.test(id)?(x=>(x>0?'+':'')+x):(x=>x+'%')))(+v)}
 function apply(o){for(const k in o){const v=o[k];if(v===null)continue;if(k==='filter')S.filter=v;else if(k==='tone')S.tone=v;else if(k==='gs')S.gs=v;else setV(k,v)}}
 function freeSnap(key){['cam','film','paper'].forEach(x=>{if(x!==key)S[x]=x==='paper'?'standard':'none'});apply(CAM[S.cam]);apply(FILM[S.film]);apply({tone:'none',toneStrength:60});settle()}
 function settle(){mark('filter');mark('tone')}
@@ -47,6 +50,7 @@ grid('tone','TONE','調色',k=>{S.tone=k});
 SL.forEach(([t,jp,items])=>{const g=document.createElement('div');g.className='grp';g.innerHTML=`<div class="st">${t}<i>${jp}</i></div>`;
  items.forEach(([id,n,j,d,mn=0,mx=100])=>{const r=document.createElement('div');r.className='row';r.innerHTML=`<div class="lb"><span>${n}<small>${j}</small></span><b id="${id}V"></b></div><input type="range" id="${id}" min="${mn}" max="${mx}" class="${WT.includes(id)?'wt':/Hue$/.test(id)?'hue':''}">`;g.appendChild(r);
   r.querySelector('input').oninput=e=>{setV(id,e.target.value);go()}});gen.appendChild(g);G[t]=g});
+const ZG=G['ZONE SYSTEM'];ZG.classList.add('fz','fold');ZG.querySelector('.st').onclick=()=>ZG.classList.toggle('fold');
 function sub(key,parent,on){const g=document.createElement('div');g.className='grid';g.style.marginBottom='8px';NAMES[key].forEach(n=>{const[k,t]=n.split(':'),b=document.createElement('div');b.className='sb';b.textContent=t;b.dataset.k=k;b.onclick=()=>{on(k);mark(key);go()};g.appendChild(b)});el[key]=g;parent.insertBefore(g,parent.children[1])}
 sub('dev',G['DEVELOPER'],k=>{S.dev=k});sub('leak',G['LIGHT LEAK'],k=>{S.leak=k});
 sub('brush',G['BRUSH'],k=>{if(k==='clear'){initMask();S.brush='off'}else S.brush=k;cv.style.touchAction=S.brush==='off'?'':'none'});
@@ -118,9 +122,11 @@ let has=false,raw=0,sc=1,long=900;
 let seed=0,da=0;
 const DV2=()=>DV[S.dev];
 function hsl(h){h/=360;const f=n=>{const k=(n+h*12)%12;return .5-.225*Math.max(-1,Math.min(k-3,9-k,1))},c=[f(0),f(8),f(4)],m=(c[0]+c[1]+c[2])/3;return c.map(x=>x/m)}
+function zoneLut(L){const z=[...Array(10)].map((_,i)=>V['z'+(i+1)]||0);if(!z.some(Boolean))return L;
+ for(let x=0;x<256;x++){const u=Math.max(0,Math.min(9,x/255*10-.5)),i=Math.min(8,Math.floor(u)),f=u-i,t=f*f*(3-2*f),o=z[i]*(1-t)+z[i+1]*t;L[x]=Math.max(0,Math.min(255,Math.round(L[x]+o*.3)))}return L}
 function render(){if(!has)return;gl.viewport(0,0,cv.width,cv.height);
  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,T1);gl.pixelStorei(gl.UNPACK_ALIGNMENT,1);
- gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,256,1,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,lut(V.tcBlack,V.tcShadow,V.tcMidtone,V.tcHighlight,V.tcWhite));
+ gl.texImage2D(gl.TEXTURE_2D,0,gl.LUMINANCE,256,1,0,gl.LUMINANCE,gl.UNSIGNED_BYTE,zoneLut(lut(V.tcBlack,V.tcShadow,V.tcMidtone,V.tcHighlight,V.tcWhite)));
  ['uI','uL','uM'].forEach((n,i)=>gl.uniform1i(loc(n),i));gl.uniform2f(loc('uR'),cv.width,cv.height);
  const fw=FW.none.map((n,i)=>n+(FW[S.filter][i]-n)*V.filterStrength/100),tc=TC[S.tone].map(x=>x/255),dv=DV2(),pp=(V.pushPull-50)/25;
  gl.uniform3f(loc('uW'),...fw);gl.uniform3f(loc('uTC'),...tc);gl.uniform3f(loc('uSh'),...hsl(V.shHue));gl.uniform3f(loc('uHi'),...hsl(V.hiHue));
