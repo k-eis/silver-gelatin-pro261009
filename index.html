@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Silver Gelatin PRO — k-eis DESIGN FILTER 006 PRO</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{--bg:#0d0e10;--ink:#e6e8ec;--muted:#8d939c;--line:#2a2d33;--ls:#454a53;--a:#dfe3e9;--b:#6b717b;--on:#101114;--track:#23262b;--w1:#07080a;--w2:#15171b;--w3:#2c3037;--glow:rgba(223,227,233,.16);--panel:linear-gradient(180deg,rgba(223,227,233,.07),rgba(223,227,233,.01));
+background:radial-gradient(120% 55% at 50% 0%,var(--glow),transparent 70%),linear-gradient(180deg,var(--w1),var(--w2) 50%,var(--w3));background-attachment:fixed;color:var(--ink);font:13px/1.5 -apple-system,BlinkMacSystemFont,'Helvetica Neue',sans-serif;min-height:100vh}
+body.theme-anshitsu{--bg:#150605;--ink:#f6e3da;--muted:#b98c7c;--line:#4a1b15;--ls:#7a2e22;--a:#ff8a5c;--b:#a8321f;--on:#1a0705;--track:#2e0f0b;--w1:#0f0403;--w2:#2a0b08;--w3:#5c1710;--glow:rgba(255,106,61,.26);--panel:linear-gradient(180deg,rgba(255,106,61,.10),rgba(255,106,61,.01))}
+.wrap{max-width:1080px;margin:0 auto;padding:22px 16px 40px}
+header{position:relative;padding-bottom:20px;margin-bottom:6px}
+header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,var(--b),var(--a) 50%,var(--b),transparent)}
+.tag{font:600 10px/1 'Courier New',monospace;letter-spacing:.16em;color:var(--a);margin-bottom:10px}
+h1{font:300 32px/1.1 -apple-system,sans-serif;letter-spacing:-.01em;background:linear-gradient(90deg,var(--ink),var(--a) 55%,var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+h1 span{font-size:15px;margin-left:10px;-webkit-text-fill-color:var(--muted)}
+.tl{color:var(--muted);margin-top:6px;font-size:12px}.cp{color:var(--muted);font:9px 'Courier New',monospace;margin-top:8px}
+.wedge{height:7px;margin-bottom:16px;border:1px solid var(--ls)}
+.stage{display:grid;grid-template-columns:1fr 330px;border:1px solid var(--ls);background:var(--panel);box-shadow:0 0 0 1px #0006 inset,0 18px 50px #0008}
+.view{position:relative;min-height:420px;display:flex;align-items:center;justify-content:center;padding:18px;border-right:1px solid var(--ls);background:radial-gradient(90% 80% at 50% 40%,var(--w3),var(--w1))}
+#out{display:none;max-width:100%;max-height:78vh;border:1px solid var(--ls);box-shadow:0 0 0 6px #0003,0 10px 40px #000a}
+#drop{width:240px;height:160px;border:1px dashed var(--ls);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;color:var(--muted);background:linear-gradient(135deg,rgba(255,255,255,.04),transparent)}
+#drop:hover{border-color:var(--a)}
+#badge{position:absolute;top:12px;left:12px;font:9px 'Courier New',monospace;letter-spacing:.08em;background:#0007;padding:4px 8px;border:1px solid #fff2;display:none}
+.ctl{padding:16px 18px;overflow:auto;max-height:86vh}
+.grp{padding:14px 0;border-bottom:1px solid;border-image:linear-gradient(90deg,var(--ls),transparent) 1}
+.st{font:600 9px/1 'Courier New',monospace;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}.st i{font:9px -apple-system,sans-serif;margin-left:6px;letter-spacing:0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.sb{border:1px solid var(--ls);padding:8px 4px;text-align:center;cursor:pointer;font:600 10px/1.3 -apple-system,sans-serif;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent)}
+.sb:hover{border-color:var(--a)}.sb.on,.th.on{background:linear-gradient(135deg,var(--a),var(--b));border-color:var(--a);color:var(--on)}
+.th{border:1px solid var(--ls);padding:6px 10px;cursor:pointer;font-size:10px;margin-right:5px;display:inline-flex}
+.row{margin:11px 0}.lb{display:flex;justify-content:space-between;font-size:10px;margin-bottom:6px}.lb b{font:500 10px 'Courier New',monospace;color:var(--a)}.lb small{color:var(--muted);margin-left:4px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:2px;outline:none;--p:50%;background:linear-gradient(90deg,var(--b),var(--a) var(--p),var(--track) var(--p))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--a) 55%,var(--b));box-shadow:0 1px 4px #000a,0 0 0 3px var(--glow)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border:0;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,var(--a) 55%,var(--b))}
+.btns{display:flex;gap:6px;margin-top:14px}.btn{flex:1;padding:10px;border:1px solid var(--a);background:linear-gradient(135deg,var(--a),var(--b));color:var(--on);font:600 11px -apple-system,sans-serif;cursor:pointer}
+.btn.s{background:transparent;color:var(--ink);border-color:var(--ls)}.btn:disabled{opacity:.35}
+label.c{display:flex;gap:6px;align-items:center;font-size:11px;margin-top:10px;color:var(--muted)}
+footer{display:flex;gap:8px;margin-top:16px}footer a{flex:1;text-align:center;padding:12px 8px;border:1px solid var(--ls);color:var(--ink);text-decoration:none;font:600 10px 'Courier New',monospace;letter-spacing:.08em;background:var(--panel)}footer a:hover{border-color:var(--a)}
+#ov{display:none;position:fixed;inset:0;z-index:9;background:#000e;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:14px;text-align:center}#ov img{max-width:100%;max-height:72vh}
+@media(max-width:760px){.stage{grid-template-columns:1fr}.view{position:sticky;top:0;z-index:5;min-height:220px;max-height:46vh;border-right:0;border-bottom:1px solid var(--ls)}#out{max-height:40vh}.ctl{max-height:none}footer{flex-direction:column}}
+</style></head>
+<body class="theme-ginnezu"><div class="wrap">
+<header><div class="tag">k-eis DESIGN FILTER 006 PRO</div>
+<h1>Silver Gelatin PRO<span>銀塩の階調</span></h1>
+<div class="tl">The whole darkroom, in real time. / 暗室の工程を、そのままリアルタイムで。</div>
+<div class="cp">© 2026 k-eis studio</div></header>
+<div class="wedge" id="wedge"></div>
+<div class="stage"><div class="view"><div id="drop"><b>写真を選ぶ</b><span>Tap to choose a photo</span></div><canvas id="out"></canvas><div id="badge"></div></div>
+<div class="ctl" id="ctl"><div class="grp"><div class="st">THEME<i>着せ替え</i></div><span class="th on" data-t="ginnezu">銀鼠 Ginnezu</span><span class="th" data-t="anshitsu">暗室 Anshitsu</span></div>
+<div id="gen"></div>
+<label class="c"><input type="checkbox" id="cmp"> COMPARE 元の写真と交互に表示</label>
+<div class="btns"><button class="btn" id="save" disabled>SAVE PNG</button><button class="btn s" id="reset">RESET</button></div></div></div>
+<footer><a href="https://keis01.substack.com/p/k-eis-design-filter-000?r=87bvw8&utm_medium=ios" target="_blank" rel="noopener">PHILOSOPHY • USAGE • LICENSE</a><a href="https://keis01.substack.com/s/k-eis-design-filter" target="_blank" rel="noopener">ALL FILTERS</a><a href="https://note.com/noted_k_eis03/m/m458f00a3d892" target="_blank" rel="noopener">OUTSIDE SERIES</a></footer></div>
+<div id="ov"><img id="ovi" alt=""><p>画像を長押しして「写真に保存」を選んでください<br><small>Press and hold the image, then tap "Save to Photos"</small></p><button class="btn s" id="ovc" style="flex:none">閉じる / Close</button></div>
+<input type="file" id="file" accept="image/*" hidden>
+<script src="silver-gelatin-pro.js"></script></body></html>
